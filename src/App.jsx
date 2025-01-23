@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Blue from './assets/pepsi-blue.png'
 import Black from './assets/pepsi-black.png'
 import Silver from './assets/pepsi-silver.png'
@@ -25,6 +25,11 @@ function App() {
   const MudarCor = (cor) => {
     setBgColor(cor)
   }
+
+  useEffect(() => {
+    localStorage.setItem('imagem', imagem);
+    localStorage.setItem('cor', bgColor);
+  }, [imagem, bgColor]);
 
   return (
     <section style={{ backgroundColor: bgColor }}>
