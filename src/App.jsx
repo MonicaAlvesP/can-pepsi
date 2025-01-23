@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Blue from './assets/pepsi-blue.png'
 import Black from './assets/pepsi-black.png'
 import Silver from './assets/pepsi-silver.png'
@@ -20,10 +20,12 @@ function App() {
 
   const MudarImagem = (imagem) => {
     setImagem(imagem)
+    localStorage.setItem('imagem', imagem)
   }
 
   const MudarCor = (cor) => {
     setBgColor(cor)
+    localStorage.setItem('cor', cor)
   }
 
   return (
@@ -46,8 +48,8 @@ function App() {
         <section className="content">
           <div className="texts">
             <h1>
-              THAT&apos;S WHAT <span>I LIKE</span>
-            </h1>
+              THAT&apos;S WHAT</h1>
+            <span className='typing-effect'> I LIKE ❤️</span>
             <p className='textItem'>
               Pepsi has always been about bringing people together and creating moments of joy.
             </p>

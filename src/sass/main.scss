@@ -49,13 +49,32 @@ header {
 
   h1 {
     font-size: 48px;
-    width: 75%;
-    line-height: 1;
+    width: 70%;
     font-weight: 900;
+  }
+}
 
-    span {
-      font-size: 96px;
-    }
+.typing-effect {
+  line-height: 1;
+  font-weight: 900;
+  font-size: 96px;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typing 3.5s steps(40, end) infinite;
+}
+
+@keyframes typing {
+  0% {
+    width: 0
+  }
+
+  50% {
+    width: 100%
+  }
+
+  100% {
+    width: 0
   }
 }
 
@@ -84,18 +103,18 @@ header {
   width: 48%;
   align-items: flex-end;
   height: 70vh;
-  
+
   button {
     border: none;
     cursor: pointer;
     width: 70px;
     background: none;
     transition: transform 0.3s ease;
-    
+
     &:hover {
       transform: translateY(-10px);
     }
-    
+
     img {
       width: 70%;
       height: 100%;
