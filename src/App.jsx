@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Blue from './assets/pepsi-blue.png'
 import Black from './assets/pepsi-black.png'
 import Silver from './assets/pepsi-silver.png'
@@ -9,8 +9,8 @@ import { RiInstagramFill } from "react-icons/ri";
 
 function App() {
 
-  const [imagem, setImagem] = useState(Blue)
-  const [bgColor, setBgColor] = useState('#0261BF')
+  const [imagem, setImagem] = useState(localStorage.getItem('imagem') || Blue)
+  const [bgColor, setBgColor] = useState(localStorage.getItem('cor') || '#0261BF')
 
   const latinha = [
     { imagem: Blue, cor: '#0261BF' },
@@ -20,12 +20,10 @@ function App() {
 
   const MudarImagem = (imagem) => {
     setImagem(imagem)
-    localStorage.setItem('imagem', imagem)
   }
 
   const MudarCor = (cor) => {
     setBgColor(cor)
-    localStorage.setItem('cor', cor)
   }
 
   return (
