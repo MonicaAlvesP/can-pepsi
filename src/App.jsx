@@ -11,15 +11,17 @@ function App() {
 
   const [imagem, setImagem] = useState(localStorage.getItem('imagem') || Blue)
   const [bgColor, setBgColor] = useState(localStorage.getItem('cor') || '#0261BF')
+  const [altImage, setAltImage] = useState('')
 
   const latinha = [
-    { imagem: Blue, cor: '#0261BF' },
-    { imagem: Silver, cor: '#e60c2e' },
-    { imagem: Black, cor: '#1F1E1F' }
+    { imagem: Blue, cor: '#0261BF', alt: 'Latinha azul' },
+    { imagem: Silver, cor: '#e60c2e', alt: 'Latinha prata' },
+    { imagem: Black, cor: '#1F1E1F', alt: 'Latinha preta' }
   ];
 
-  const MudarImagem = (imagem) => {
-    setImagem(imagem)
+  const MudarImagem = (imagem, altImage) => {
+    setImagem(imagem),
+      setAltImage(altImage)
   }
 
   const MudarCor = (cor) => {
@@ -67,17 +69,17 @@ function App() {
               <button
                 key={index}
                 onClick={() => {
-                  MudarImagem(latinha.imagem);
+                  MudarImagem(latinha.imagem, latinha.alt);
                   MudarCor(latinha.cor);
                 }}
               >
                 <img src={latinha.imagem}
-                  alt={`latinhas ${latinha.cor}`}
+                  alt={altImage}
                 />
               </button>
             ))}
             <img src={imagem}
-              alt="Latinha selecionada"
+              alt={altImage}
               className="canSelect" />
           </div>
           <div className='socialIcons'>
