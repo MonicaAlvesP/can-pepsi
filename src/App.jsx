@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Blue from './assets/pepsi-blue.png';
 import Black from './assets/pepsi-black.png';
 import Silver from './assets/pepsi-silver.png';
@@ -12,6 +12,9 @@ function App() {
   const [altImage, setAltImage] = useState('');
   const [hoverFont, setHoverFont] = useState('#fff');
   const [hoverButtonBg, setHoverButtonBg] = useState('#73A1D1');
+
+  const buttonRef = useRef(null);
+  const menuItemsRef = useRef([]);
 
   const latinha = [
     { imagem: Blue, cor: '#0261BF', alt: 'Latinha azul', fontHover: '#A1E1F0', hoverButton: '#73A1D1' },
@@ -35,6 +38,18 @@ function App() {
     localStorage.setItem('cor', bgColor);
   }, [imagem, bgColor]);
 
+  useEffect(() => {
+    if (buttonRef.current) {
+      buttonRef.current.style.backgroundColor = '#fff';
+      buttonRef.current.style.color = hoverFont;
+    }
+    menuItemsRef.current.forEach(item => {
+      if (item) {
+        item.style.color = '#fff';
+      }
+    });
+  }, [hoverButtonBg, hoverFont]);
+
   return (
     <section style={{ backgroundColor: bgColor }}>
       <main className="container">
@@ -45,6 +60,7 @@ function App() {
               {['Home', 'Products', 'What\'s New', 'Newsletter', 'Contact'].map((item, index) => (
                 <li
                   key={index}
+                  ref={el => menuItemsRef.current[index] = el}
                   style={{
                     color: '#fff',
                     transition: 'color 0.3s ease',
@@ -70,6 +86,7 @@ function App() {
               Whether you&apos;re enjoying a refreshing Pepsi at a family gathering, a party with friends, or just a quiet moment to yourself, it&apos;s the perfect companion for all the things you love. That&apos;s what we like.
             </p>
             <button
+              ref={buttonRef}
               className="buttonview"
               style={{
                 transition: 'background-color 0.3s ease, color 0.3s ease',
