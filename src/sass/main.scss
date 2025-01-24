@@ -137,3 +137,67 @@ header {
     color: #fff;
   }
 }
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1.2rem 0;
+    height: 100%;
+  }
+
+  header {
+    flex-direction: column;
+    height: 20vh;
+  }
+
+  .nav {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .menu {
+      li {
+        margin: 0 0.4rem;
+        font-size: 16px;
+      }
+    }
+  }
+
+  .content {
+    flex-direction: column;
+    width: 100%;
+    margin-top: 1rem;
+    height: 100%;
+  }
+
+  .typing-effect {
+    font-size: 58px;
+  }
+
+  .texts {
+    width: 100%;
+    text-align: center;
+    margin-top: 2rem;
+  }
+
+  .can {
+    width: 100%;
+    justify-content: space-around;
+    
+    img {
+      width: 70%;
+    }
+  }
+
+  .canSelect {
+    margin: 0;
+    height: 50vh;
+  }
+
+  .socialIcons {
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 3rem;
+    gap: 4rem;
+  }
+}
