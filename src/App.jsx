@@ -1,136 +1,100 @@
-import { useState, useEffect, useRef } from 'react';
-import Blue from './assets/pepsi-blue.png';
-import Black from './assets/pepsi-black.png';
-import Silver from './assets/pepsi-silver.png';
-import Logo from './assets/logo.png';
-import { FaFacebookF, FaTwitter } from 'react-icons/fa';
+import { createContext, useContext, useState, useEffect } from "react";
+import logo from "@/assets/logo.png";
+import Blue from "@/assets/pepsi-blue.png";
+import Black from "@/assets/pepsi-black.png";
+import Silver from "@/assets/pepsi-silver.png";
+import { FaFacebookF, FaTwitter } from "react-icons/fa";
 import { RiInstagramFill } from "react-icons/ri";
+import s from "@/sass/app.module.scss";
 
-function App() {
-  const [imagem, setImagem] = useState(localStorage.getItem('imagem') || Blue);
-  const [bgColor, setBgColor] = useState(localStorage.getItem('cor') || '#0261BF');
-  const [altImage, setAltImage] = useState('');
-  const [hoverFont, setHoverFont] = useState('#fff');
-  const [hoverButtonBg, setHoverButtonBg] = useState('#73A1D1');
+// Cria um contexto para o tema
+const ThemeContext = createContext();
 
-  const buttonRef = useRef(null);
-  const menuItemsRef = useRef([]);
+// ThemeProvider para gerenciar o estado do tema e fornecê-lo aos componentes filhos
+const ThemeProvider = ({ children }) => {
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "blue-theme");
+  const [imagem, setImagem] = useState(localStorage.getItem("imagem") || Blue);
+  const [altImage, setAltImage] = useState("Latinha azul");
 
-  const latinha = [
-    { imagem: Blue, cor: '#0261BF', alt: 'Latinha azul', fontHover: '#A1E1F0', hoverButton: '#73A1D1' },
-    { imagem: Silver, cor: '#e60c2e', alt: 'Latinha prata', fontHover: '#F68988', hoverButton: '#E6A1A8' },
-    { imagem: Black, cor: '#1F1E1F', alt: 'Latinha preta', fontHover: '#818081', hoverButton: '#818081' }
-  ];
-
-  const MudarImagem = (imagem, alt) => {
-    setImagem(imagem);
-    setAltImage(alt);
-  };
-
-  const MudarCor = (cor, fontHover, hoverButton) => {
-    setBgColor(cor);
-    setHoverFont(fontHover);
-    setHoverButtonBg(hoverButton);
-  };
-
+  // Salva o tema e a imagem no localStorage sempre que eles mudam
   useEffect(() => {
-    localStorage.setItem('imagem', imagem);
-    localStorage.setItem('cor', bgColor);
-  }, [imagem, bgColor]);
-
-  useEffect(() => {
-    if (buttonRef.current) {
-      buttonRef.current.style.backgroundColor = '#fff';
-      buttonRef.current.style.color = hoverFont;
-    }
-    menuItemsRef.current.forEach(item => {
-      if (item) {
-        item.style.color = '#fff';
-      }
-    });
-  }, [hoverButtonBg, hoverFont]);
+    localStorage.setItem("theme", theme);
+    localStorage.setItem("imagem", imagem);
+  }, [theme, imagem]);
 
   return (
-    <section style={{ backgroundColor: bgColor }}>
-      <main className="container">
-        <header>
-          <img src={Logo} alt="Logotipo da PEPSI" className="logo" />
-          <nav className="nav">
-            <ul className="menu">
-              {['Home', 'Products', 'What\'s New', 'Newsletter', 'Contact'].map((item, index) => (
-                <li
-                  key={index}
-                  ref={el => menuItemsRef.current[index] = el}
-                  style={{
-                    color: '#fff',
-                    transition: 'color 0.3s ease',
-                  }}
-                  onMouseEnter={(e) => (e.target.style.color = hoverFont)}
-                  onMouseLeave={(e) => (e.target.style.color = '#fff')}
-                >
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </header>
+    <ThemeContext.Provider value={{ theme, setTheme, imagem, setImagem, altImage, setAltImage }}>
+      <div className={`${s.app} ${s[theme]}`}>{children}</div>
+    </ThemeContext.Provider>
+  );
+};
 
-        <section className="content">
-          <div className="texts">
-            <h1>THAT&apos;S WHAT</h1>
-            <span className="typing-effect">I LIKE ❤️</span>
-            <p className="textItem">
-              Pepsi has always been about bringing people together and creating moments of joy.
-            </p>
-            <p className="textItem">
-              Whether you&apos;re enjoying a refreshing Pepsi at a family gathering, a party with friends, or just a quiet moment to yourself, it&apos;s the perfect companion for all the things you love. That&apos;s what we like.
-            </p>
-            <button
-              ref={buttonRef}
-              className="buttonview"
-              style={{
-                transition: 'background-color 0.3s ease, color 0.3s ease',
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.backgroundColor = hoverButtonBg;
-                e.target.style.color = '#fff';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.backgroundColor = '#fff';
-                e.target.style.color = hoverFont;
-              }}
-            >
-              VIEW ALL PRODUCTS
-            </button>
-          </div>
+// Componente ThemeSelector para permitir que os usuários selecionem um tema
+const ThemeSelector = () => {
+  const { setTheme, setImagem, setAltImage, imagem, altImage } = useContext(ThemeContext);
 
-          <div className="can">
-            {latinha.map((latinha, index) => (
-              <button
-                key={index}
-                onClick={() => {
-                  MudarImagem(latinha.imagem, latinha.alt);
-                  MudarCor(latinha.cor, latinha.fontHover, latinha.hoverButton);
-                }}
-              >
-                <img src={latinha.imagem} alt={latinha.alt} />
-              </button>
-            ))}
-            <img
-              src={imagem}
-              alt={altImage}
-              className="canSelect"
-            />
-          </div>
-          <div className="socialIcons">
-            <FaFacebookF />
-            <FaTwitter />
-            <RiInstagramFill />
-          </div>
-        </section>
-      </main>
+  const themes = [
+    { imagem: Blue, alt: "Latinha azul", theme: "blue-theme" },
+    { imagem: Silver, alt: "Latinha prata", theme: "silver-theme" },
+    { imagem: Black, alt: "Latinha preta", theme: "black-theme" },
+  ];
+
+  return (
+    <section className={s.can}>
+      {themes.map((latinha, index) => (
+        <div
+          className={s.canItem}
+          key={index}
+          onClick={() => {
+            setTheme(latinha.theme);
+            setImagem(latinha.imagem);
+            setAltImage(latinha.alt);
+          }}
+        >
+          <img src={latinha.imagem} alt={latinha.alt} />
+        </div>
+      ))}
+      <img src={imagem} alt={altImage} className={s.canSelect} />
     </section>
   );
-}
+};
+
+const App = () => {
+  return (
+    <ThemeProvider>
+      <header className={s.containerHeader}>
+        <img src={logo} alt="Logotipo da PEPSI" />
+        <nav className={s.navigation}>
+          <ul className={s.menu}>
+            <li>Home</li>
+            <li>Products</li>
+            <li>What's New</li>
+            <li>Newsletter</li>
+            <li>Contact</li>
+          </ul>
+        </nav>
+      </header>
+      <main className={s.container}>
+        <section className={s.texts}>
+          <h1>THAT'S WHAT</h1>
+          <span className={s.typingEffect}>I LIKE ❤️</span>
+          <p className={s.textItem}>
+            Pepsi sempre foi sobre reunir pessoas e criar momentos de alegria.
+            Seja aproveitando uma Pepsi refrescante em uma reunião de família, uma festa com amigos,
+            ou apenas um momento tranquilo para você, é o companheiro perfeito para todas as coisas que você ama.
+            Isso é o que gostamos.
+          </p>
+          <button className={s.buttonview}>VER TODOS OS PRODUTOS</button>
+        </section>
+        <ThemeSelector />
+        <section className={s.socialIcons}>
+          <FaFacebookF />
+          <FaTwitter />
+          <RiInstagramFill />
+        </section>
+      </main>
+    </ThemeProvider>
+  );
+};
 
 export default App;

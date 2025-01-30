@@ -1,0 +1,96 @@
+@use 'variables' as *;
+
+@mixin blue-theme($bg-color-blue, $bg-color-blue-hover, $font-color-blue-hover) {
+  background-color: $bg-color-blue;
+
+  li {
+    color: #fff;
+
+    &:hover {
+      color: $font-color-blue-hover;
+    }
+  }
+
+  button {
+    background-color: $button-color-blue;
+    color: $font-color-blue-hover;
+
+    &:hover {
+      background-color: $bg-color-blue-hover;
+    }
+  }
+
+  svg {
+    color: #fff;
+
+    &:hover {
+      color: $font-color-blue-hover;
+    }
+  }
+}
+
+@mixin silver-theme($bg-color-red, $bg-color-red-hover, $font-color-red-hover) {
+  background-color: $bg-color-red;
+
+  li {
+    color: #fff;
+
+    &:hover {
+      color: $font-color-red-hover;
+    }
+  }
+
+  button {
+    background-color: $button-color-red;
+    color: $font-color-red-hover;
+
+    &:hover {
+      background-color: $bg-color-red-hover;
+    }
+  }
+
+  svg {
+    color: #fff;
+
+    &:hover {
+      color: $font-color-red-hover;
+    }
+  }
+}
+
+@mixin black-theme($bg-color-black, $bg-color-black-hover, $font-color-black-hover) {
+  background-color: $bg-color-black;
+
+  li {
+    color: #fff;
+
+    &:hover {
+      color: $button-color-black-hover;
+    }
+  }
+
+  button {
+    background-color: $button-color-black;
+    color: $font-color-black-hover;
+
+    &:hover {
+      background-color: $bg-color-black-hover;
+    }
+  }
+
+  svg {
+    color: #fff;
+
+    &:hover {
+      color: $button-color-black-hover;
+    }
+  }
+}
+
+@mixin breakpoints($breakpoint) {
+  @if $breakpoint =='mobile' {
+    @media (min-width: 320px) and (max-width: 1023px) {
+      @content;
+    }
+  }
+}

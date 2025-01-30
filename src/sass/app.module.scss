@@ -1,0 +1,198 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+.app {
+  transition: all 0.3s ease-in-out;
+
+  &.blue-theme {
+    @include blue-theme($bg-color-blue, $button-color-blue-hover, $font-color-blue-hover);
+  }
+
+  &.silver-theme {
+    @include silver-theme($bg-color-red, $button-color-red-hover, $font-color-red-hover);
+  }
+
+  &.black-theme {
+    @include black-theme($bg-color-black, $button-color-black-hover, $font-color-black-hover);
+  }
+}
+
+.containerHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 20vh;
+  padding: 2rem;
+
+  img {
+    width: 12vh;
+  }
+}
+
+.navigation {
+  width: 45%;
+}
+
+.menu {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+
+  li {
+    font-size: 20px;
+    cursor: pointer;
+  }
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80vh;
+  padding: 0 2rem;
+}
+
+.texts {
+  width: 40%;
+  color: #fff;
+
+  h1 {
+    font-size: 48px;
+    font-weight: 900;
+  }
+}
+
+.textItem {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  line-height: 1.2;
+}
+
+.typingEffect {
+  line-height: 1;
+  font-weight: 900;
+  font-size: 96px;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typing 3.5s steps(40, end) infinite;
+}
+
+@keyframes typing {
+  0% {
+    width: 0;
+  }
+
+  50% {
+    width: 100%;
+  }
+
+  100% {
+    width: 0;
+  }
+}
+
+.buttonview {
+  width: 40%;
+  height: 30px;
+  cursor: pointer;
+  border: none;
+  border-radius: 50px;
+  margin-top: 1rem;
+}
+
+.can {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: end;
+  width: 45%;
+}
+
+.canItem {
+  height: 10%;
+  cursor: pointer;
+
+  img {
+    width: 8vh;
+  }
+}
+
+.canSelect {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 75vh;
+}
+
+.socialIcons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  width: 5%;
+  font-size: 2.5rem;
+}
+
+@media screen and (max-width: 1279px) {
+  .containerHeader {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .navigation {
+    width: 100%;
+  }
+
+  .menu {
+    justify-content: space-evenly;
+    width: 100%;
+
+    li {
+      font-size: 12px;
+    }
+  }
+
+  .container {
+    height: 100%;
+    flex-direction: column;
+    margin-top: 2rem;
+    gap: 5rem;
+  }
+
+  .texts {
+    width: 100%;
+    text-align: center;
+
+    h1 {
+      font-size: 32px;
+    }
+
+    .typingEffect {
+      font-size: 48px;
+    }
+  }
+
+  .buttonview {
+    width: 100%;
+  }
+
+  .can {
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+
+  .canItem {
+    img {
+      width: 3.5vh;
+    }
+  }
+
+  .canSelect {
+    height: 50vh;
+  }
+
+  .socialIcons {
+    display: none;
+  }
+}
